@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Food Application Android Project</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="menuMain">Menu</string>
+    <string name="menuProfile">Profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
