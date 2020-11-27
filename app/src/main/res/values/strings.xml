@@ -4,5 +4,33 @@
     <string name="menuMain">Menu</string>
     <string name="menuProfile">Profile</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="loginTitle">Login page</string>
+    <string name="firstNameLabel">First name:</string>
+    <string name="firstName">Write your first name</string>
+    <string name="lastNameLabel">Last Name:</string>
+    <string name="lastName">Write your last name</string>
+    <string name="loginButtonText">Login</string>
+    <string name="registerButtonText">Register</string>
+
+    <string name="registerTitle">Register page</string>
+    <string name="emailLabel">Email:</string>
+    <string name="email">Write your email</string>
+    <string name="usernameLabel">Username:</string>
+    <string name="username">Write your username</string>
+    <string name="phoneLabel">Telephone:</string>
+    <string name="phone">Write your number</string>
+
+    <string name="profileTitle">Profile page</string>
+    <string name="profileNameLabel">Name:</string>
+    <string name="profileName">Your name</string>
+    <string name="profilePhone">Your number</string>
+    <string name="profilePhoneLabel">Telephone:</string>
+    <string name="profileEmailLabel">Email:</string>
+    <string name="profileEmail">Your email</string>
+    <string name="profileUsernameLabel">Username:</string>
+    <string name="profileUsername">Your username</string>
+
+    <string name="restaurant_name">Restaurant name</string>
+    <string name="restaurant_address">Restaurant address</string>
+    <string name="restaurant_price">Restaurant price</string>
 </resources>

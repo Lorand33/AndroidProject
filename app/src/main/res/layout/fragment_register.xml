@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".fragments.ProfileFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.RegisterFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -12,12 +13,12 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/profileTitle"
+            android:id="@+id/registerTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="76dp"
             android:gravity="center_horizontal"
-            android:text="@string/profileTitle"
+            android:text="@string/registerTitle"
             android:textColor="@color/purple_700"
             android:textSize="38sp" />
 
@@ -27,26 +28,26 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/profileNameLabel"
+                android:id="@+id/registerFirstNameLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="15dp"
                 android:layout_weight="0.5"
-                android:text="@string/profileNameLabel"
+                android:text="@string/firstNameLabel"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/profileName"
+            <EditText
+                android:id="@+id/registerFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_weight="0.3"
-                android:text="@string/profileName"
+                android:hint="@string/firstName"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -57,26 +58,26 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/profilePhoneLabel"
+                android:id="@+id/registerLastNameLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="15dp"
                 android:layout_weight="0.5"
-                android:text="@string/profilePhoneLabel"
+                android:text="@string/lastNameLabel"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/profilePhone"
+            <EditText
+                android:id="@+id/registerLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_weight="0.3"
-                android:text="@string/profilePhone"
+                android:hint="@string/lastName"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -87,26 +88,26 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/profileEmailLabel"
+                android:id="@+id/registerEmailLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="15dp"
                 android:layout_weight="0.5"
-                android:text="@string/profileEmailLabel"
+                android:text="@string/emailLabel"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/profileEmail"
+            <EditText
+                android:id="@+id/registerEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_weight="0.3"
-                android:text="@string/profileEmail"
+                android:hint="@string/email"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -117,30 +118,69 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/profileUsernameLabel"
+                android:id="@+id/registerUsernameLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="15dp"
                 android:layout_weight="0.5"
-                android:text="@string/profileUsernameLabel"
+                android:text="@string/usernameLabel"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/profileUsername"
+            <EditText
+                android:id="@+id/registerUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_weight="0.3"
-                android:text="@string/profileUsername"
+                android:hint="@string/username"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/registerPhoneLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_weight="0.5"
+                android:text="@string/phoneLabel"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/registerPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_weight="0.3"
+                android:hint="@string/phone"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+        <Button
+            android:id="@+id/registerPageRegisterButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginLeft="80dp"
+            android:backgroundTint="@color/black"
+            android:text="@string/registerButtonText" />
     </LinearLayout>
     </ScrollView>
 
