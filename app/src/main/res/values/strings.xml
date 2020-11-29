@@ -19,6 +19,9 @@
     <string name="username">Write your username</string>
     <string name="phoneLabel">Telephone:</string>
     <string name="phone">Write your number</string>
+    <string name="passwordLabel">Password:</string>
+    <string name="password">Your password</string>
+    <string name="showPassword">Show password</string>
 
     <string name="profileTitle">Profile page</string>
     <string name="profileNameLabel">Name:</string>

@@ -39,26 +39,26 @@
             app:layout_constraintTop_toBottomOf="@+id/loginTitle">
 
             <TextView
-                android:id="@+id/firstNameLabel"
+                android:id="@+id/usernameLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="15dp"
                 android:layout_weight="0.5"
-                android:text="@string/firstNameLabel"
+                android:text="@string/usernameLabel"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/firstName"
+                android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_weight="0.3"
-                android:hint="@string/firstName"
+                android:hint="@string/username"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -74,30 +74,41 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
             <TextView
-                android:id="@+id/lastNameLabel"
+                android:id="@+id/passwordLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="15dp"
                 android:layout_weight="0.5"
-                android:text="@string/lastNameLabel"
+                android:text="@string/passwordLabel"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/lastName"
+                android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_weight="0.3"
-                android:hint="@string/lastName"
+                android:hint="@string/password"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
         </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/showPasswordLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/showPassword"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
         <Button
             android:id="@+id/loginButton"
@@ -108,9 +119,10 @@
             android:layout_marginLeft="80dp"
             android:backgroundTint="@color/black"
             android:text="@string/loginButtonText"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+            app:layout_constraintTop_toBottomOf="@+id/showPasswordLogin" />
 
         <TextView
             android:id="@+id/beforeRegister"
@@ -135,6 +147,7 @@
             android:layout_marginLeft="80dp"
             android:backgroundTint="@color/black"
             android:text="@string/registerButtonText"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/beforeRegister" />

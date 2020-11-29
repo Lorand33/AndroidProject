@@ -1,13 +1,14 @@
 package com.example.foodapplicationandroidproject.fragments
 
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
+import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -20,6 +21,8 @@ class RegisterFragment : Fragment() {
     private lateinit var registerButton: Button
     private lateinit var mUserViewModel : UserViewModel
     private lateinit var binding: FragmentRegisterBinding
+    private lateinit var showPassword : CheckBox
+    private lateinit var password: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -32,15 +35,33 @@ class RegisterFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
 
         registerButton = binding.registerPageRegisterButton
+        showPassword = binding.showPassword
+        password = binding.registerPassword
+        password.setOnClickListener(View.OnClickListener {
+            Toast.makeText(
+                    activity,
+                    "The password should contain at least 8 characters, one number, one uppercase and one lowercase letter",
+                    Toast.LENGTH_LONG
+            ).show()
+        })
+        //set up what happens when the "Show password" checkbox is selected or not
+        showPassword.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, isChecked ->
+            if (isChecked) {
+                // show password
+                password.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            } else {
+                // hide password
+                password.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
+        })
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         registerButton.setOnClickListener{
             if(!checkInputElements()){
                 Toast.makeText(requireContext(), "All fields should be correct! Please check your inputs", Toast.LENGTH_LONG).show()
             }
             else{
-                val user = checkIfUserAlreadyExists(binding.registerEmail.text.toString(),binding.registerUsername.text.toString(),binding.registerPhone.text.toString())
-                if(user == 0){
-                    addUserToDatabase(binding.registerFirstName.text.toString(),binding.registerLastName.text.toString(),binding.registerEmail.text.toString(),binding.registerUsername.text.toString(),binding.registerPhone.text.toString())
+                if(checkIfUserAlreadyExists(binding.registerEmail.text.toString(),binding.registerUsername.text.toString(),binding.registerPhone.text.toString())){
+                    addUserToDatabase(binding.registerFirstName.text.toString(),binding.registerLastName.text.toString(),binding.registerEmail.text.toString(),binding.registerUsername.text.toString(),binding.registerPhone.text.toString(),binding.registerPassword.text.toString())
                     Toast.makeText(requireContext(), "Successful registration", Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
                 }
@@ -91,6 +112,14 @@ class RegisterFragment : Fragment() {
                 binding.registerPhone.error = "Invalid phone number"
                 return false
             }
+            binding.registerPassword.text.toString().isEmpty() -> {
+                binding.registerPassword.error = "Empty input - please write your password"
+                return false
+            }
+            !isValidPassword(binding.registerPassword.text.toString()) -> {
+                binding.registerPassword.error = "Invalid password - please write a correct one"
+                return false
+            }
             else -> return true
         }
     }
@@ -109,12 +138,18 @@ class RegisterFragment : Fragment() {
         return regex.matches(phone)
     }
 
-    fun checkIfUserAlreadyExists(email: String,username:String,phone: String):Int{
-        return Integer.parseInt(mUserViewModel.findUser(email,username,phone).toString())
+    fun checkIfUserAlreadyExists(email: String,username:String,phone: String): Boolean{
+        mUserViewModel.findUser(email,username,phone)
+        return mUserViewModel.register.value == 0
     }
 
-    fun addUserToDatabase(firstName : String, lastName : String, email: String, username: String, phone: String){
-        val user = User(0,firstName,lastName,email,username,phone)
+    fun addUserToDatabase(firstName : String, lastName : String, email: String, username: String, phone: String, password:String){
+        val user = User(0,firstName,lastName,email,username,phone,password)
         mUserViewModel.addUser(user)
+    }
+
+    fun isValidPassword(password: String):Boolean{
+        val regex =("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}\$").toRegex()
+        return regex.matches(password)
     }
 }

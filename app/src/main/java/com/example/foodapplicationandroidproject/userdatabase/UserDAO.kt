@@ -16,5 +16,8 @@ interface UserDao {
     fun readAllData(): LiveData<List<User>>
 
     @Query("SELECT count(*) FROM user_table WHERE email = :email AND username = :username AND telephone = :phoneNumber")
-    suspend fun findUser(email: String, username: String, phoneNumber: String): Int
+    fun findUser(email: String, username: String, phoneNumber: String): LiveData<Int>
+
+    @Query("SELECT count(*) FROM user_table WHERE (email = :username OR telephone = :username OR username = :username) AND password = :password")
+    fun loginUser(username: String, password: String): LiveData<Int>
 }
