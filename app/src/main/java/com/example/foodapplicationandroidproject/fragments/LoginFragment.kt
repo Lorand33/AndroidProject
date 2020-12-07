@@ -13,17 +13,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.foodapplicationandroidproject.R
 import com.example.foodapplicationandroidproject.databinding.FragmentLoginBinding
-import com.example.foodapplicationandroidproject.userdatabase.model.User
 import com.example.foodapplicationandroidproject.userdatabase.viewModel.UserViewModel
 
 class LoginFragment : Fragment() {
     private lateinit var registerButton: Button
     private lateinit var loginButton: Button
     private lateinit var showPassword : CheckBox
-    private lateinit var password: EditText
+    private lateinit var passwordText: EditText
+    private lateinit var usernameText : EditText
     private lateinit var mViewModel : UserViewModel
     private lateinit var binding : FragmentLoginBinding
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -37,8 +37,9 @@ class LoginFragment : Fragment() {
         registerButton = binding.registerButton
         loginButton = binding.loginButton
         showPassword = binding.showPasswordLogin
-        password = binding.password
-        password.setOnClickListener(View.OnClickListener {
+        passwordText = binding.password
+        usernameText = binding.username
+        passwordText.setOnClickListener(View.OnClickListener {
             Toast.makeText(
                 activity,
                 "The password should contain at least 8 characters, one number, one uppercase and one lowercase letter",
@@ -47,13 +48,14 @@ class LoginFragment : Fragment() {
         })
         mViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
+
         showPassword.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, isChecked ->
             if (isChecked) {
-                // show password
-                password.transformationMethod = HideReturnsTransformationMethod.getInstance()
+
+                passwordText.transformationMethod = HideReturnsTransformationMethod.getInstance()
             } else {
-                // hide password
-                password.transformationMethod = PasswordTransformationMethod.getInstance()
+
+                passwordText.transformationMethod = PasswordTransformationMethod.getInstance()
             }
         })
 
@@ -62,19 +64,25 @@ class LoginFragment : Fragment() {
         }
 
         loginButton.setOnClickListener{
-            if(checkUser(binding.username.text.toString(),binding.password.text.toString())){
-                findNavController().navigate(R.id.action_loginFragment_to_mainScreenFragment)
-            }else{
-                Toast.makeText(requireContext(), "Invalid username or password!", Toast.LENGTH_SHORT).show()
+            if(checkUser(usernameText.text.toString(),passwordText.text.toString())){
+                val user = mViewModel.getUser(usernameText.text.toString(), passwordText.text.toString())
+                val bundle = Bundle()
+                bundle.putString("NAME", "${user.firstName} ${user.lastName}")
+                bundle.putString("PHONE", user.telephone)
+                bundle.putString("EMAIL", user.email)
+                bundle.putString("USERNAME", user.username)
+
+                findNavController().navigate(R.id.action_loginFragment_to_profileFragment,bundle)
+            }
+            else{
+                Toast.makeText(requireContext(), "Wrong username or password!", Toast.LENGTH_SHORT).show()
             }
         }
 
         return binding.root
     }
 
-    fun checkUser(username :String, password : String) : Boolean{
-        mViewModel.signInUser(username,password)
-        return mViewModel.login.value !=0
+    fun checkUser(username: String, password: String): Boolean{
+        return mViewModel.loginUser(username, password) == 1
     }
-
 }

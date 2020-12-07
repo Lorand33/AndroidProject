@@ -199,7 +199,8 @@
                 android:layout_weight="0.3"
                 android:hint="@string/password"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:inputType="textPassword"/>
 
         </LinearLayout>
 

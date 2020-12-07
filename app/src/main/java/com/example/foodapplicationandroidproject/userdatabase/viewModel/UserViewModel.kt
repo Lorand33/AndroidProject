@@ -3,6 +3,7 @@ package com.example.foodapplicationandroidproject.userdatabase.viewModel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.foodapplicationandroidproject.userdatabase.UserDatabase
 import com.example.foodapplicationandroidproject.userdatabase.model.User
@@ -13,13 +14,12 @@ import kotlinx.coroutines.launch
 
 class UserViewModel(application: Application):AndroidViewModel(application) {
     private val repository: UserRepository
-    //TODO: lateinit error
-    lateinit var login: LiveData<Int>
-    lateinit var register: LiveData<Int>
+    private val readAllData: LiveData<List<User>>
 
     init {
         val userDao = UserDatabase.getDatabase(application).userDao()
         repository = UserRepository(userDao)
+        readAllData = repository.readAllData
     }
 
     fun addUser(user: User){
@@ -28,15 +28,15 @@ class UserViewModel(application: Application):AndroidViewModel(application) {
         }
     }
 
-    fun findUser(email : String, username : String, telephone : String) {
-        viewModelScope.launch(Dispatchers.IO) {
-             register = repository.findUser(email,username,telephone)
-        }
+    fun getUser(username: String, password: String): User {
+        return repository.getUser(username, password)
     }
 
-    fun signInUser(username : String, password : String){
-        viewModelScope.launch(Dispatchers.IO) {
-            login = repository.loginUser(username,password)
-        }
+    fun findUser(email: String, username: String, phone: String): Int {
+        return repository.findUser(email, username, phone)
+    }
+
+    fun loginUser(username: String, password: String): Int {
+        return repository.loginUser(username, password)
     }
 }

@@ -47,10 +47,10 @@ class RegisterFragment : Fragment() {
         //set up what happens when the "Show password" checkbox is selected or not
         showPassword.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, isChecked ->
             if (isChecked) {
-                // show password
+
                 password.transformationMethod = HideReturnsTransformationMethod.getInstance()
             } else {
-                // hide password
+
                 password.transformationMethod = PasswordTransformationMethod.getInstance()
             }
         })
@@ -60,13 +60,21 @@ class RegisterFragment : Fragment() {
                 Toast.makeText(requireContext(), "All fields should be correct! Please check your inputs", Toast.LENGTH_LONG).show()
             }
             else{
-                if(checkIfUserAlreadyExists(binding.registerEmail.text.toString(),binding.registerUsername.text.toString(),binding.registerPhone.text.toString())){
-                    addUserToDatabase(binding.registerFirstName.text.toString(),binding.registerLastName.text.toString(),binding.registerEmail.text.toString(),binding.registerUsername.text.toString(),binding.registerPhone.text.toString(),binding.registerPassword.text.toString())
-                    Toast.makeText(requireContext(), "Successful registration", Toast.LENGTH_SHORT).show()
+                if(checkUser(binding.registerEmail.text.toString(),binding.registerUsername.text.toString(),binding.registerPhone.text.toString())) {
+                    addUserToDatabase(
+                        binding.registerFirstName.text.toString(),
+                        binding.registerLastName.text.toString(),
+                        binding.registerEmail.text.toString(),
+                        binding.registerUsername.text.toString(),
+                        binding.registerPhone.text.toString(),
+                        binding.registerPassword.text.toString()
+                    )
+                    Toast.makeText(requireContext(), "Successful registration", Toast.LENGTH_SHORT)
+                        .show()
                     findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
                 }
                 else{
-                    Toast.makeText(requireContext(), "User already exists!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "This user is already registered!", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -138,18 +146,18 @@ class RegisterFragment : Fragment() {
         return regex.matches(phone)
     }
 
-    fun checkIfUserAlreadyExists(email: String,username:String,phone: String): Boolean{
-        mUserViewModel.findUser(email,username,phone)
-        return mUserViewModel.register.value == 0
-    }
-
-    fun addUserToDatabase(firstName : String, lastName : String, email: String, username: String, phone: String, password:String){
-        val user = User(0,firstName,lastName,email,username,phone,password)
+    fun addUserToDatabase(firstName: String, lastName: String, email: String, username: String, telephone: String, password: String){
+        val user = User(firstName, lastName, email, username, telephone, password)
         mUserViewModel.addUser(user)
     }
 
     fun isValidPassword(password: String):Boolean{
         val regex =("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}\$").toRegex()
         return regex.matches(password)
+    }
+
+    fun checkUser(email: String, username: String, phone: String): Boolean{
+        val user = mUserViewModel.findUser(email, username, phone)
+        return user == 0
     }
 }

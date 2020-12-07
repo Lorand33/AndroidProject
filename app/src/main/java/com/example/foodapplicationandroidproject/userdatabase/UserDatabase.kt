@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.foodapplicationandroidproject.userdatabase.model.User
 
-@Database(entities = [User::class], version = 1, exportSchema = false)
+@Database(entities = [User::class], version = 2, exportSchema = false)
 abstract class UserDatabase : RoomDatabase(){
     abstract fun userDao() : UserDao
 
@@ -22,7 +22,7 @@ abstract class UserDatabase : RoomDatabase(){
             }
 
             synchronized(this){
-                val instance = Room.databaseBuilder(context.applicationContext,UserDatabase::class.java,"user_database").build()
+                val instance = Room.databaseBuilder(context.applicationContext,UserDatabase::class.java,"user_database").fallbackToDestructiveMigration().allowMainThreadQueries().build()
                 INSTANCE = instance
                 return instance
             }

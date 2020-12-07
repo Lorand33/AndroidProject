@@ -33,6 +33,12 @@ class SplashScreenFragment : Fragment() {
 
         Timer().schedule(object : TimerTask(){
             override fun run() {
+                try {
+                    synchronized(this) {
+                    }
+                }catch ( ex: InterruptedException){
+                    ex.printStackTrace()
+                }
                 findNavController().navigate(R.id.action_splashScreenFragment_to_loginFragment)
             }
         },2000)
