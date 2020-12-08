@@ -14,10 +14,6 @@ import java.util.*
 class SplashScreenFragment : Fragment() {
     private lateinit var binding : FragmentSplashScreenBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

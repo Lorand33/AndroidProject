@@ -10,8 +10,7 @@ import com.example.foodapplicationandroidproject.R
 
 import com.example.foodapplicationandroidproject.database.model.Restaurant
 
-class RestaurantListAdapter:RecyclerView.Adapter<RestaurantListAdapter.MyViewHolder>() {
-    private var list = emptyList<Restaurant>()
+class RestaurantListAdapter(private val List: List<Restaurant>):RecyclerView.Adapter<RestaurantListAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val imageView: ImageView = itemView.findViewById(R.id.restaurant_image)
@@ -26,7 +25,7 @@ class RestaurantListAdapter:RecyclerView.Adapter<RestaurantListAdapter.MyViewHol
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentItem = list[position]
+        val currentItem = List[position]
         holder.imageView.setImageResource(R.drawable.logo)
         holder.restaurantNameView.text = currentItem.name
         holder.restaurantAddressView.text = currentItem.address
@@ -34,12 +33,7 @@ class RestaurantListAdapter:RecyclerView.Adapter<RestaurantListAdapter.MyViewHol
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return List.size
     }
 
-    fun setData(restaurantList: List<Restaurant>){
-        this.list = restaurantList
-        notifyDataSetChanged()
-
-    }
 }

@@ -4,12 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupWithNavController
 import com.example.foodapplicationandroidproject.databinding.ActivityMainBinding
-import com.example.foodapplicationandroidproject.viewModels.ApiViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -28,5 +25,6 @@ class MainActivity : AppCompatActivity() {
             navHostFragment!!.navController
         )
         bottomNavigationView!!.visibility = View.GONE
+
     }
 }

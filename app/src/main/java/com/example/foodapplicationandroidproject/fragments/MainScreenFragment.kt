@@ -6,24 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodapplicationandroidproject.R
-import com.example.foodapplicationandroidproject.databinding.FragmentMainScreenBinding
-import com.example.foodapplicationandroidproject.database.repository.RestaurantRepository
+import com.example.foodapplicationandroidproject.database.repository.Repository
 import com.example.foodapplicationandroidproject.database.viewModels.RestaurantViewModel
-import com.example.foodapplicationandroidproject.viewModels.ApiViewModel
-import com.example.foodapplicationandroidproject.viewModels.ApiViewModelFactory
+import com.example.foodapplicationandroidproject.database.viewModels.RestaurantViewModelFactory
+import com.example.foodapplicationandroidproject.databinding.FragmentMainScreenBinding
 
 
 class MainScreenFragment : Fragment() {
     private lateinit var binding: FragmentMainScreenBinding
-    private lateinit var mRestaurantViewModel : RestaurantViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var mViewModel : RestaurantViewModel
+    private var pageNumber : Int =1
+    private var cityName : String = "New York"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,14 +28,22 @@ class MainScreenFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_main_screen, container, false)
 
-        val restaurantAdapter = RestaurantListAdapter()
-        val recyclerView = binding.recycleView
-        recyclerView.adapter = restaurantAdapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val repository = Repository()
+        val viewModelFactory = RestaurantViewModelFactory(repository)
+        mViewModel = ViewModelProvider(this,viewModelFactory).get(RestaurantViewModel::class.java)
+
+        mViewModel.getRestaurantsByCity(cityName,pageNumber)
+        mViewModel.responseRestaurantsFromCities.observe(viewLifecycleOwner,{
+            response -> if(response.isSuccessful){
+                val listAdapter = RestaurantListAdapter(response.body()!!.restaurants)
+                val recyclerView = binding.recycleView
+                recyclerView.adapter = listAdapter
+                recyclerView.layoutManager = LinearLayoutManager(requireContext())
+                recyclerView.setHasFixedSize(true)
+            }
+        })
 
 
-        mRestaurantViewModel = ViewModelProvider(this).get(RestaurantViewModel::class.java)
-        mRestaurantViewModel.readAllData.observe(viewLifecycleOwner, Observer { restaurant -> restaurantAdapter.setData(restaurant) })
         return binding.root
     }
 
@@ -47,7 +51,6 @@ class MainScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         requireActivity().findViewById<View>(R.id.bottom_nav_menu).visibility = View.VISIBLE
-
 
     }
 }

@@ -1,28 +1,45 @@
 package com.example.foodapplicationandroidproject.database.viewModels
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.foodapplicationandroidproject.database.RestaurantDatabase
-import com.example.foodapplicationandroidproject.database.model.Restaurant
-import com.example.foodapplicationandroidproject.database.repository.RestaurantRepository
-import kotlinx.coroutines.Dispatchers
+import com.example.foodapplicationandroidproject.database.model.Cities
+import com.example.foodapplicationandroidproject.database.model.Countries
+import com.example.foodapplicationandroidproject.database.model.RestaurantsFromCities
+import com.example.foodapplicationandroidproject.database.repository.Repository
 import kotlinx.coroutines.launch
+import retrofit2.Response
 
-class RestaurantViewModel(application: Application) : AndroidViewModel(application) {
-    val readAllData : LiveData<List<Restaurant>>
-    private val repository : RestaurantRepository
+class RestaurantViewModel(private val repository: Repository) : ViewModel() {
+    val responseRestaurantsFromCountries : MutableLiveData<Response<RestaurantsFromCities>> = MutableLiveData()
+    val responseCountries : MutableLiveData<Response<Countries>> = MutableLiveData()
+    val responseRestaurantsFromCities: MutableLiveData<Response<RestaurantsFromCities>> = MutableLiveData()
+    val responseCities : MutableLiveData<Response<Cities>> = MutableLiveData()
 
-    init{
-        val restaurantDao = RestaurantDatabase.getDatabase(application).restaurantDao()
-        repository = RestaurantRepository(restaurantDao)
-        readAllData = repository.readAllData
-    }
-
-    fun addRestaurant(restaurant: Restaurant){
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.addRestaurant(restaurant)
+    fun getRestaurantsByCountry(country:String,current_page:Int){
+        viewModelScope.launch {
+            val response = repository.getRestaurantsByCountry(country,current_page)
+            responseRestaurantsFromCountries.value = response
         }
     }
+    fun getCountries(){
+        viewModelScope.launch {
+            val response = repository.getCountries()
+            responseCountries.value=response
+        }
+    }
+    fun getRestaurantsByCity(city :String,page:Int){
+        viewModelScope.launch{
+            val response = repository.getRestaurantsByCity(city,page)
+            responseRestaurantsFromCities.value= response
+        }
+    }
+
+    fun getCities(){
+        viewModelScope.launch {
+            val response = repository.getCities()
+            responseCities.value = response
+        }
+    }
+
 }

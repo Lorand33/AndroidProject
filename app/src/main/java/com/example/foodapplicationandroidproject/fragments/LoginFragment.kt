@@ -16,6 +16,12 @@ import com.example.foodapplicationandroidproject.databinding.FragmentLoginBindin
 import com.example.foodapplicationandroidproject.userdatabase.viewModel.UserViewModel
 
 class LoginFragment : Fragment() {
+    companion object{
+        var name = ""
+        var email = ""
+        var phone = ""
+        var username = ""
+    }
     private lateinit var registerButton: Button
     private lateinit var loginButton: Button
     private lateinit var showPassword : CheckBox
@@ -23,10 +29,6 @@ class LoginFragment : Fragment() {
     private lateinit var usernameText : EditText
     private lateinit var mViewModel : UserViewModel
     private lateinit var binding : FragmentLoginBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,13 +68,12 @@ class LoginFragment : Fragment() {
         loginButton.setOnClickListener{
             if(checkUser(usernameText.text.toString(),passwordText.text.toString())){
                 val user = mViewModel.getUser(usernameText.text.toString(), passwordText.text.toString())
-                val bundle = Bundle()
-                bundle.putString("NAME", "${user.firstName} ${user.lastName}")
-                bundle.putString("PHONE", user.telephone)
-                bundle.putString("EMAIL", user.email)
-                bundle.putString("USERNAME", user.username)
+                name = "${user.firstName} ${user.lastName}"
+                phone = user.telephone
+                email = user.email
+                username = user.username
 
-                findNavController().navigate(R.id.action_loginFragment_to_profileFragment,bundle)
+                findNavController().navigate(R.id.action_loginFragment_to_mainScreenFragment)
             }
             else{
                 Toast.makeText(requireContext(), "Wrong username or password!", Toast.LENGTH_SHORT).show()

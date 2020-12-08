@@ -10,8 +10,9 @@ import com.example.foodapplicationandroidproject.database.model.Restaurant
 @Dao
 interface RestaurantDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addRestaurant(restaurant: Restaurant)
+    fun addRestaurant(restaurant: Restaurant)
 
     @Query("Select * From restaurant_table Order by id ASC")
     fun readAllData():LiveData<List<Restaurant>>
+
 }
