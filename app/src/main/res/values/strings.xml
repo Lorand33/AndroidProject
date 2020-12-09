@@ -38,4 +38,25 @@
     <string name="restaurant_price">Restaurant price</string>
 
     <string name="detailTitle">Details page</string>
+    <string name="detailName">Name:</string>
+    <string name="detailRestaurantName">Restaurant name</string>
+    <string name="detailAddress">Address:</string>
+    <string name="detailRestaurantAddress">Address place</string>
+    <string name="detailPostal">P.code:</string>
+    <string name="detailRestaurantPostal">Postal code</string>
+    <string name="detailCity">City:</string>
+    <string name="detailRestaurantCity">City name</string>
+    <string name="detailState">State:</string>
+    <string name="detailRestaurantState">State name</string>
+    <string name="detailArea">Area:</string>
+    <string name="detailRestaurantArea">Area name</string>
+    <string name="detailCountry">Country:</string>
+    <string name="detailRestaurantCountry">Country name</string>
+    <string name="detailPhone">Phone:</string>
+    <string name="detailRestaurantPhone">Phone number</string>
+    <string name="call">Call number</string>
+
+
+    <string name="search">Search</string>
+    <string name="city">Write a city…</string>
 </resources>

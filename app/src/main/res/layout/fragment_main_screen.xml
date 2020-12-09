@@ -9,14 +9,80 @@
         android:layout_height="match_parent"
         tools:context=".fragments.MainMenuFragment">
 
+        <Spinner
+            android:id="@+id/citySpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/searchCity"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="25dp"
+            android:ems="10"
+            android:hint="@string/city"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/citySpinner"
+             />
+
+        <Button
+            android:id="@+id/searchCityButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="150dp"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="@+id/searchCity"
+            app:layout_constraintTop_toTopOf="@+id/citySpinner"
+            android:text="@string/search" />
+
+        <Button
+            android:id="@+id/listNextButton"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="N"
+            android:layout_marginLeft="8dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/listPrevButton"
+            app:layout_constraintTop_toTopOf="@+id/citySpinner"
+            android:layout_marginStart="8dp" />
+        <Button
+            android:id="@+id/listPrevButton"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="P"
+            android:layout_marginLeft="8dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/searchCityButton"
+            app:layout_constraintTop_toTopOf="@+id/citySpinner"
+            android:layout_marginStart="8dp" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycle_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="85dp"
+            android:layout_marginBottom="65dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginEnd="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchCityButton"
             tools:listitem="@layout/item_layout" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
