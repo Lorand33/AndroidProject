@@ -3,7 +3,6 @@ package com.example.foodapplicationandroidproject.userdatabase.viewModel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.foodapplicationandroidproject.userdatabase.UserDatabase
 import com.example.foodapplicationandroidproject.userdatabase.model.User

@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.foodapplicationandroidproject.favorites.FavoriteViewModel
 import com.example.foodapplicationandroidproject.R
 import com.example.foodapplicationandroidproject.database.repository.Repository
 import com.example.foodapplicationandroidproject.database.viewModels.RestaurantViewModel
@@ -21,8 +22,15 @@ import com.example.foodapplicationandroidproject.databinding.FragmentMainScreenB
 class MainScreenFragment : Fragment() {
     private lateinit var binding: FragmentMainScreenBinding
     private lateinit var mViewModel : RestaurantViewModel
+    private lateinit var favouriteViewModel : FavoriteViewModel
     private var pageNumber : Int =1
     private var cityName : String = "Abilene"
+
+    companion object{
+        var favList : MutableList<String> = mutableListOf()
+        var isFavorite: Boolean = false
+        var counter = 0
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +42,7 @@ class MainScreenFragment : Fragment() {
         val repository = Repository()
         val viewModelFactory = RestaurantViewModelFactory(repository)
         mViewModel = ViewModelProvider(this,viewModelFactory).get(RestaurantViewModel::class.java)
+        favouriteViewModel = ViewModelProvider(this).get(FavoriteViewModel::class.java)
 
         mViewModel.getCities()
         mViewModel.responseCities.observe(viewLifecycleOwner,{
