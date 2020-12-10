@@ -52,11 +52,11 @@ class DetailFragment : Fragment() {
             startActivity(intent)
         }
 
-        if(counter == 0){
-            binding.detailFavouriteButton.setImageResource(android.R.drawable.btn_star_big_off)
-        }
-        else if (counter == 1){
+        if(favList.contains(getRestaurant[0].name)){
             binding.detailFavouriteButton.setImageResource(android.R.drawable.btn_star_big_on)
+        }
+        else{
+            binding.detailFavouriteButton.setImageResource(android.R.drawable.btn_star_big_off)
         }
 
         binding.detailFavouriteButton.setOnClickListener{

@@ -66,17 +66,21 @@ class LoginFragment : Fragment() {
         }
 
         loginButton.setOnClickListener{
-            if(checkUser(usernameText.text.toString(),passwordText.text.toString())){
-                val user = mViewModel.getUser(usernameText.text.toString(), passwordText.text.toString())
-                name = "${user.firstName} ${user.lastName}"
-                phone = user.telephone
-                email = user.email
-                username = user.username
-
-                findNavController().navigate(R.id.action_loginFragment_to_mainScreenFragment)
+            if(!checkInputElements()){
+                Toast.makeText(requireContext(), "All fields should be correct! Please check your inputs", Toast.LENGTH_LONG).show()
             }
-            else{
-                Toast.makeText(requireContext(), "Wrong username or password!", Toast.LENGTH_SHORT).show()
+            else {
+                if (checkUser(usernameText.text.toString(), passwordText.text.toString())) {
+                    val user = mViewModel.getUser(usernameText.text.toString(), passwordText.text.toString())
+                    name = "${user.firstName} ${user.lastName}"
+                    phone = user.telephone
+                    email = user.email
+                    username = user.username
+
+                    findNavController().navigate(R.id.action_loginFragment_to_mainScreenFragment)
+                } else {
+                    Toast.makeText(requireContext(), "Wrong username or password!", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
@@ -85,5 +89,37 @@ class LoginFragment : Fragment() {
 
     fun checkUser(username: String, password: String): Boolean{
         return mViewModel.loginUser(username, password) == 1
+    }
+
+    fun checkInputElements() : Boolean {
+        when {
+            usernameText.text.toString().isEmpty() -> {
+                usernameText.error = "Empty input - please write a username"
+                return false
+            }
+            !isValidUsername(usernameText.text.toString()) -> {
+                usernameText.error = "Invalid input - please write a correct username"
+                return false
+            }
+            passwordText.text.toString().isEmpty() -> {
+                passwordText.error = "Empty input - please write a password"
+                return false
+            }
+            !isValidPassword(passwordText.text.toString()) -> {
+                passwordText.error = "Invalid input - please write a correct password"
+                return false
+            }
+            else -> return true
+        }
+    }
+
+    fun isValidUsername(username : String) : Boolean{
+        val regex = ("^[a-zA-Z0-9 ]+\$").toRegex()
+        return regex.matches(username)
+    }
+
+    fun isValidPassword(password: String):Boolean{
+        val regex =("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}\$").toRegex()
+        return regex.matches(password)
     }
 }

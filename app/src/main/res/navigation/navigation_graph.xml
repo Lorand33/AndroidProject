@@ -12,9 +12,7 @@
         tools:layout="@layout/fragment_splash_screen" >
         <action
             android:id="@+id/action_splashScreenFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-        <action
-            android:id="@+id/action_splashScreenFragment_pop"
+            app:destination="@id/loginFragment"
             app:popUpTo="@id/splashScreenFragment"
             app:popUpToInclusive="true" />
     </fragment>

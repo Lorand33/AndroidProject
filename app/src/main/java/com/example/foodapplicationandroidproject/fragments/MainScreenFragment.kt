@@ -24,7 +24,9 @@ class MainScreenFragment : Fragment() {
     private lateinit var mViewModel : RestaurantViewModel
     private lateinit var favouriteViewModel : FavoriteViewModel
     private var pageNumber : Int =1
-    private var cityName : String = "Abilene"
+    private var cityName : String = "Addison"
+    private var spinnerPosition = -1
+    private lateinit var cities : List<String>
 
     companion object{
         var favList : MutableList<String> = mutableListOf()
@@ -47,13 +49,20 @@ class MainScreenFragment : Fragment() {
         mViewModel.getCities()
         mViewModel.responseCities.observe(viewLifecycleOwner,{
             response -> if(response.isSuccessful){
-                val cities = mViewModel.responseCities.value!!.body()!!.cities
+                cities = mViewModel.responseCities.value!!.body()!!.cities
                 binding.citySpinner.adapter = ArrayAdapter(requireActivity().baseContext, android.R.layout.simple_spinner_item,cities)
+                if(spinnerPosition != -1) {
+                    binding.citySpinner.setSelection(spinnerPosition)
+                }
                 binding.citySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                         cityName = cities[position]
                         pageNumber = 1
                         mViewModel.getRestaurantsByCity(cityName,pageNumber)
+                        binding.searchCity.setText(cityName)
+                        if(parent?.selectedItemPosition != 0) {
+                            spinnerPosition = parent!!.selectedItemPosition
+                        }
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -95,7 +104,7 @@ class MainScreenFragment : Fragment() {
             else{
                 pageNumber = 1
                 cityName = binding.searchCity.text.toString()
-                binding.searchCity.text.clear()
+                binding.citySpinner.setSelection(cities.indexOf(cityName))
                 mViewModel.getRestaurantsByCity(cityName,pageNumber)
                 mViewModel.responseRestaurantsFromCities.observe(viewLifecycleOwner,{
                     response -> if(response.isSuccessful){
@@ -121,6 +130,10 @@ class MainScreenFragment : Fragment() {
                 })
                 Toast.makeText(requireContext(),"Restaurants from $cityName", Toast.LENGTH_LONG).show()
             }
+        }
+
+        binding.searchCity.setOnClickListener{
+            binding.searchCity.text.clear()
         }
 
         binding.listNextButton.setOnClickListener{

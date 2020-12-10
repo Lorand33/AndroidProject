@@ -45,11 +45,11 @@ class RestaurantListAdapter(private val List: List<Restaurant>,private val conte
         holder.restaurantAddressView.text = currentItem.address
         holder.restaurantPriceView.text = "Price: ${currentItem.price}"
 
-        if(counter == 0){
-            holder.favoriteIcon.setImageResource(android.R.drawable.btn_star_big_off)
-        }
-        else if (counter == 1){
+        if(favList.contains(currentItem.name)){
             holder.favoriteIcon.setImageResource(android.R.drawable.btn_star_big_on)
+        }
+        else{
+            holder.favoriteIcon.setImageResource(android.R.drawable.btn_star_big_off)
         }
 
         holder.favoriteIcon.setOnClickListener{
@@ -68,7 +68,7 @@ class RestaurantListAdapter(private val List: List<Restaurant>,private val conte
                 isFavorite = true
                 if(!favList.contains(currentItem.name)){
                     favList.add(currentItem.name)
-                    Toast.makeText(context, "Restaurant added from favorites", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Restaurant added to favorites", Toast.LENGTH_SHORT).show()
                 }
             }
         }
