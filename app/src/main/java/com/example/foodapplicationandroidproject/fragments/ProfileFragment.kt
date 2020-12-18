@@ -6,16 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.example.foodapplicationandroidproject.R
 import com.example.foodapplicationandroidproject.databinding.FragmentProfileBinding
+import com.example.foodapplicationandroidproject.favourites.FavouriteViewModel
 import com.example.foodapplicationandroidproject.fragments.LoginFragment.Companion.email
 import com.example.foodapplicationandroidproject.fragments.LoginFragment.Companion.name
 import com.example.foodapplicationandroidproject.fragments.LoginFragment.Companion.phone
 import com.example.foodapplicationandroidproject.fragments.LoginFragment.Companion.username
+import com.example.foodapplicationandroidproject.fragments.MainScreenFragment.Companion.favList
 
 
 class ProfileFragment : Fragment() {
     private lateinit var binding : FragmentProfileBinding
+    private lateinit var favouriteViewModel: FavouriteViewModel
+    var restaurants = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,6 +32,13 @@ class ProfileFragment : Fragment() {
         binding.profileEmail.text = email
         binding.profilePhone.text = phone
         binding.profileUsername.text = username
+
+        favouriteViewModel = ViewModelProvider(this).get(FavouriteViewModel::class.java)
+
+        for(restaurant in favList){
+            restaurants += "$restaurant \n"
+        }
+        binding.profileRestaurants.text = restaurants
 
         return binding.root
     }

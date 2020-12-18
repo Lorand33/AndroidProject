@@ -1,5 +1,6 @@
 package com.example.foodapplicationandroidproject.fragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,21 +11,19 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.foodapplicationandroidproject.favorites.FavoriteViewModel
 import com.example.foodapplicationandroidproject.R
-import com.example.foodapplicationandroidproject.database.model.Restaurant
 import com.example.foodapplicationandroidproject.databinding.FragmentDetailBinding
-import com.example.foodapplicationandroidproject.fragments.MainScreenFragment.Companion.counter
+import com.example.foodapplicationandroidproject.favourites.FavouriteViewModel
+import com.example.foodapplicationandroidproject.favourites.Favourites
+import com.example.foodapplicationandroidproject.fragments.LoginFragment.Companion.username
 import com.example.foodapplicationandroidproject.fragments.MainScreenFragment.Companion.favList
-import com.example.foodapplicationandroidproject.fragments.MainScreenFragment.Companion.isFavorite
+import com.example.foodapplicationandroidproject.fragments.MainScreenFragment.Companion.favouriteRestaurantList
 
 class DetailFragment : Fragment() {
-    companion object{
-        var getRestaurant : MutableList<Restaurant> = mutableListOf()
-    }
     private lateinit var binding: FragmentDetailBinding
-    private lateinit var favoriteViewModel: FavoriteViewModel
+    private lateinit var favoriteViewModel: FavouriteViewModel
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,8 +31,9 @@ class DetailFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_detail,container,false)
 
-        favoriteViewModel = ViewModelProvider(this).get(FavoriteViewModel::class.java)
+        favoriteViewModel = ViewModelProvider(this).get(FavouriteViewModel::class.java)
 
+        var index = 0
         binding.detailRestaurantName.text = arguments?.getString("NAME")
         binding.detailRestaurantAddress.text = arguments?.getString("ADDRESS")
         binding.detailRestaurantCity.text = arguments?.getString("CITY")
@@ -52,7 +52,13 @@ class DetailFragment : Fragment() {
             startActivity(intent)
         }
 
-        if(favList.contains(getRestaurant[0].name)){
+        for(restaurants in favouriteRestaurantList){
+            if(restaurants.restaurantName == binding.detailRestaurantName.text.toString()){
+                index = restaurants.id
+            }
+        }
+
+        if(favList.contains(binding.detailRestaurantName.text.toString())){
             binding.detailFavouriteButton.setImageResource(android.R.drawable.btn_star_big_on)
         }
         else{
@@ -60,35 +66,23 @@ class DetailFragment : Fragment() {
         }
 
         binding.detailFavouriteButton.setOnClickListener{
-            if(counter == 1){
+            if(binding.detailFavouriteButton.drawable.constantState == requireContext().resources.getDrawable(android.R.drawable.btn_star_big_on).constantState){
                 binding.detailFavouriteButton.setImageResource(android.R.drawable.btn_star_big_off)
-                counter = 0
-                isFavorite = false
-                if(favList.contains(getRestaurant[0].name)){
-                    favList.remove(getRestaurant[0].name)
+                if(favList.contains(binding.detailRestaurantName.text.toString())){
+                    favList.remove(binding.detailRestaurantName.text.toString())
+                    favoriteViewModel.deleteFavorite(binding.detailRestaurantName.text.toString(),username)
                     Toast.makeText(context, "Restaurant removed from favorites", Toast.LENGTH_SHORT).show()
                 }
             }
-            else if (counter == 0){
+            else if (binding.detailFavouriteButton.drawable.constantState == requireContext().resources.getDrawable(android.R.drawable.btn_star_big_off).constantState){
                 binding.detailFavouriteButton.setImageResource(android.R.drawable.btn_star_big_on)
-                counter = 1
-                isFavorite = true
-                if(!favList.contains(getRestaurant[0].name)){
-                    favList.add(getRestaurant[0].name)
-                    Toast.makeText(context, "Restaurant added from favorites", Toast.LENGTH_SHORT).show()
+                if(!favList.contains(binding.detailRestaurantName.text.toString())){
+                    favList.add(binding.detailRestaurantName.text.toString())
+                    favoriteViewModel.addToFavorites(Favourites(index, binding.detailRestaurantName.text.toString(),username))
+                    Toast.makeText(context, "Restaurant added to favorites", Toast.LENGTH_SHORT).show()
                 }
             }
         }
-
-        /*favoriteViewModel.getFavoriteRestaurant().observe(viewLifecycleOwner, Observer<Favorites> {
-            if(!isFavorite &&  counter == 0 && favList.contains(it.restaurantName)){
-                favoriteViewModel.deleteFromFavorites(it)
-            }
-            else if(isFavorite && counter == 1 && !favList.contains(it.restaurantName)){
-                val restaurant = Favorites(0,it.restaurantName,name)
-                favoriteViewModel.addToFavorites(restaurant)
-            }
-        })*/
 
         return binding.root
     }

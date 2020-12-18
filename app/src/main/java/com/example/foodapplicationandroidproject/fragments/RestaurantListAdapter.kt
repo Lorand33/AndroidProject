@@ -8,17 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.foodapplicationandroidproject.R
-
-import com.example.foodapplicationandroidproject.database.model.Restaurant
-import com.example.foodapplicationandroidproject.fragments.DetailFragment.Companion.getRestaurant
-import com.example.foodapplicationandroidproject.fragments.MainScreenFragment.Companion.counter
+import com.example.foodapplicationandroidproject.restaurants.model.Restaurant
 import com.example.foodapplicationandroidproject.fragments.MainScreenFragment.Companion.favList
-import com.example.foodapplicationandroidproject.fragments.MainScreenFragment.Companion.isFavorite
 
 
 class RestaurantListAdapter(private val List: List<Restaurant>,private val context: Context):RecyclerView.Adapter<RestaurantListAdapter.MyViewHolder>() {
@@ -52,27 +47,6 @@ class RestaurantListAdapter(private val List: List<Restaurant>,private val conte
             holder.favoriteIcon.setImageResource(android.R.drawable.btn_star_big_off)
         }
 
-        holder.favoriteIcon.setOnClickListener{
-            if(counter == 1){
-                holder.favoriteIcon.setImageResource(android.R.drawable.btn_star_big_off)
-                counter = 0
-                isFavorite = false
-                if(favList.contains(currentItem.name)){
-                    favList.remove(currentItem.name)
-                    Toast.makeText(context, "Restaurant removed from favorites", Toast.LENGTH_SHORT).show()
-                }
-            }
-            else if (counter == 0){
-                holder.favoriteIcon.setImageResource(android.R.drawable.btn_star_big_on)
-                counter = 1
-                isFavorite = true
-                if(!favList.contains(currentItem.name)){
-                    favList.add(currentItem.name)
-                    Toast.makeText(context, "Restaurant added to favorites", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
 
         holder.itemView.setOnClickListener{
             val bundle = Bundle()
@@ -84,9 +58,6 @@ class RestaurantListAdapter(private val List: List<Restaurant>,private val conte
             bundle.putString("POSTAL", currentItem.postal_code)
             bundle.putString("COUNTRY", currentItem.country)
             bundle.putString("PHONE", currentItem.phone)
-
-            getRestaurant.clear()
-            getRestaurant.add(currentItem)
 
             holder.itemView.findNavController().navigate(R.id.action_mainScreenFragment_to_detailFragment,bundle)
         }

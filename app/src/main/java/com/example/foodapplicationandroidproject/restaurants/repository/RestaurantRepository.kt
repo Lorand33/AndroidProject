@@ -1,8 +1,8 @@
-package com.example.foodapplicationandroidproject.database.repository
+package com.example.foodapplicationandroidproject.restaurants.repository
 
 
-import com.example.foodapplicationandroidproject.database.RestaurantDao
-import com.example.foodapplicationandroidproject.database.model.Restaurant
+import com.example.foodapplicationandroidproject.restaurants.RestaurantDao
+import com.example.foodapplicationandroidproject.restaurants.model.Restaurant
 
 class RestaurantRepository(private val restaurantDao: RestaurantDao) {
     val readAllData = restaurantDao.readAllData()

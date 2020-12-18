@@ -1,12 +1,12 @@
-package com.example.foodapplicationandroidproject.database.viewModels
+package com.example.foodapplicationandroidproject.restaurants.viewModels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.foodapplicationandroidproject.database.model.Cities
-import com.example.foodapplicationandroidproject.database.model.Countries
-import com.example.foodapplicationandroidproject.database.model.RestaurantsFromCities
-import com.example.foodapplicationandroidproject.database.repository.Repository
+import com.example.foodapplicationandroidproject.restaurants.model.Cities
+import com.example.foodapplicationandroidproject.restaurants.model.Countries
+import com.example.foodapplicationandroidproject.restaurants.model.RestaurantsFromCities
+import com.example.foodapplicationandroidproject.restaurants.repository.Repository
 import kotlinx.coroutines.launch
 import retrofit2.Response
 

@@ -24,4 +24,8 @@ class UserRepository(private val userDao: UserDao) {
         return userDao.signinUser(username, password)
     }
 
+    fun countUsers() : Int {
+        return userDao.countUsers()
+    }
+
 }

@@ -11,18 +11,19 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.foodapplicationandroidproject.favorites.FavoriteViewModel
 import com.example.foodapplicationandroidproject.R
-import com.example.foodapplicationandroidproject.database.repository.Repository
-import com.example.foodapplicationandroidproject.database.viewModels.RestaurantViewModel
-import com.example.foodapplicationandroidproject.database.viewModels.RestaurantViewModelFactory
+import com.example.foodapplicationandroidproject.restaurants.repository.Repository
+import com.example.foodapplicationandroidproject.restaurants.viewModels.RestaurantViewModel
+import com.example.foodapplicationandroidproject.restaurants.viewModels.RestaurantViewModelFactory
 import com.example.foodapplicationandroidproject.databinding.FragmentMainScreenBinding
+import com.example.foodapplicationandroidproject.favourites.FavouriteViewModel
+import com.example.foodapplicationandroidproject.favourites.Favourites
 
 
-class MainScreenFragment : Fragment() {
+class MainScreenFragment() : Fragment() {
     private lateinit var binding: FragmentMainScreenBinding
     private lateinit var mViewModel : RestaurantViewModel
-    private lateinit var favouriteViewModel : FavoriteViewModel
+    private lateinit var favouriteViewModel : FavouriteViewModel
     private var pageNumber : Int =1
     private var cityName : String = "Addison"
     private var spinnerPosition = -1
@@ -30,8 +31,7 @@ class MainScreenFragment : Fragment() {
 
     companion object{
         var favList : MutableList<String> = mutableListOf()
-        var isFavorite: Boolean = false
-        var counter = 0
+        lateinit var favouriteRestaurantList: List<Favourites>
     }
 
     override fun onCreateView(
@@ -44,7 +44,8 @@ class MainScreenFragment : Fragment() {
         val repository = Repository()
         val viewModelFactory = RestaurantViewModelFactory(repository)
         mViewModel = ViewModelProvider(this,viewModelFactory).get(RestaurantViewModel::class.java)
-        favouriteViewModel = ViewModelProvider(this).get(FavoriteViewModel::class.java)
+        favouriteViewModel = ViewModelProvider(this).get(FavouriteViewModel::class.java)
+
 
         mViewModel.getCities()
         mViewModel.responseCities.observe(viewLifecycleOwner,{
@@ -73,8 +74,12 @@ class MainScreenFragment : Fragment() {
         })
 
         mViewModel.getRestaurantsByCity(cityName,pageNumber)
-        mViewModel.responseRestaurantsFromCities.observe(viewLifecycleOwner,{
-            response -> if(response.isSuccessful){
+        mViewModel.responseRestaurantsFromCities.observe(viewLifecycleOwner,{ response ->
+            if(response.isSuccessful){
+                favouriteRestaurantList = favouriteViewModel.getAllFavorites()
+                for(restaurants in favouriteRestaurantList){
+                    favList.add(restaurants.restaurantName)
+                }
                 val listAdapter = RestaurantListAdapter(response.body()!!.restaurants,this.requireContext())
                 val recyclerView = binding.recycleView
                 recyclerView.adapter = listAdapter
@@ -106,26 +111,26 @@ class MainScreenFragment : Fragment() {
                 cityName = binding.searchCity.text.toString()
                 binding.citySpinner.setSelection(cities.indexOf(cityName))
                 mViewModel.getRestaurantsByCity(cityName,pageNumber)
-                mViewModel.responseRestaurantsFromCities.observe(viewLifecycleOwner,{
-                    response -> if(response.isSuccessful){
-                    val listAdapter = RestaurantListAdapter(response.body()!!.restaurants,this.requireContext())
-                    val recyclerView = binding.recycleView
-                    recyclerView.adapter = listAdapter
-                    recyclerView.layoutManager = LinearLayoutManager(requireContext())
-                    recyclerView.setHasFixedSize(true)
-                    if(pageNumber*response.body()!!.per_page < response.body()!!.total_entries){
-                        binding.listNextButton.visibility = View.VISIBLE
-                    }
-                    else{
-                        binding.listNextButton.visibility = View.GONE
-                    }
+                mViewModel.responseRestaurantsFromCities.observe(viewLifecycleOwner,{ response ->
+                    if(response.isSuccessful){
+                        val listAdapter = RestaurantListAdapter(response.body()!!.restaurants,this.requireContext())
+                        val recyclerView = binding.recycleView
+                        recyclerView.adapter = listAdapter
+                        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+                        recyclerView.setHasFixedSize(true)
+                        if(pageNumber*response.body()!!.per_page < response.body()!!.total_entries){
+                            binding.listNextButton.visibility = View.VISIBLE
+                        }
+                        else{
+                            binding.listNextButton.visibility = View.GONE
+                        }
 
-                    if(pageNumber == 1){
-                        binding.listPrevButton.visibility = View.GONE
-                    }
-                    else{
-                        binding.listPrevButton.visibility = View.VISIBLE
-                    }
+                        if(pageNumber == 1){
+                            binding.listPrevButton.visibility = View.GONE
+                        }
+                        else{
+                            binding.listPrevButton.visibility = View.VISIBLE
+                        }
                     }
                 })
                 Toast.makeText(requireContext(),"Restaurants from $cityName", Toast.LENGTH_LONG).show()

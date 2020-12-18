@@ -1,10 +1,10 @@
-package com.example.foodapplicationandroidproject.database
+package com.example.foodapplicationandroidproject.restaurants
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.foodapplicationandroidproject.database.model.Restaurant
+import com.example.foodapplicationandroidproject.restaurants.model.Restaurant
 
 @Database(entities = [Restaurant::class], version = 2, exportSchema = false)
 abstract class RestaurantDatabase : RoomDatabase() {

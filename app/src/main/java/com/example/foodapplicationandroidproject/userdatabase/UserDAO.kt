@@ -20,4 +20,7 @@ interface UserDao {
 
     @Query("SELECT count(*) FROM user_table WHERE (email = :username OR telephone = :username OR username = :username) AND password = :password")
     fun signinUser(username: String, password: String): Int
+
+    @Query("Select count(*) from user_table")
+    fun countUsers(): Int
 }

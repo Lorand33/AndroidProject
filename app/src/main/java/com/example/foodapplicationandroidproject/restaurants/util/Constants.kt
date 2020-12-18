@@ -1,4 +1,4 @@
-package com.example.foodapplicationandroidproject.database.util
+package com.example.foodapplicationandroidproject.restaurants.util
 
 class Constants {
 

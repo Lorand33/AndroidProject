@@ -38,4 +38,8 @@ class UserViewModel(application: Application):AndroidViewModel(application) {
     fun loginUser(username: String, password: String): Int {
         return repository.loginUser(username, password)
     }
+
+    fun countUsers(): Int {
+        return repository.countUsers()
+    }
 }

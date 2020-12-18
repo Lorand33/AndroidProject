@@ -1,8 +1,8 @@
-package com.example.foodapplicationandroidproject.api
+package com.example.foodapplicationandroidproject.restaurants.api
 
-import com.example.foodapplicationandroidproject.database.model.Cities
-import com.example.foodapplicationandroidproject.database.model.Countries
-import com.example.foodapplicationandroidproject.database.model.RestaurantsFromCities
+import com.example.foodapplicationandroidproject.restaurants.model.Cities
+import com.example.foodapplicationandroidproject.restaurants.model.Countries
+import com.example.foodapplicationandroidproject.restaurants.model.RestaurantsFromCities
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

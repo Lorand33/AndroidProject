@@ -59,4 +59,6 @@
 
     <string name="search">Search</string>
     <string name="city">Write a city…</string>
+
+    <string name="profileRestaurants">Your restaurants: </string>
 </resources>

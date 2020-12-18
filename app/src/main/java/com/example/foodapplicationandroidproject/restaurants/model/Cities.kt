@@ -1,4 +1,4 @@
-package com.example.foodapplicationandroidproject.database.model
+package com.example.foodapplicationandroidproject.restaurants.model
 
 
 data class Cities (

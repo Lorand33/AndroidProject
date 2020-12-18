@@ -1,6 +1,6 @@
-package com.example.foodapplicationandroidproject.api
+package com.example.foodapplicationandroidproject.restaurants.api
 
-import com.example.foodapplicationandroidproject.database.util.Constants.Companion.BASE_URL
+import com.example.foodapplicationandroidproject.restaurants.util.Constants.Companion.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

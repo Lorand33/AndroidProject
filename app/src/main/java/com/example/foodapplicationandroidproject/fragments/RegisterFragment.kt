@@ -144,6 +144,7 @@ class RegisterFragment : Fragment() {
     }
 
     fun addUserToDatabase(firstName: String, lastName: String, email: String, username: String, telephone: String, password: String){
+        val idNumber = mUserViewModel.countUsers()
         val user = User(firstName, lastName, email, username, telephone, password)
         mUserViewModel.addUser(user)
     }

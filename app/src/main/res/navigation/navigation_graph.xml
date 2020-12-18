@@ -41,9 +41,6 @@
         <action
             android:id="@+id/action_profileFragment_to_mainScreenFragment"
             app:destination="@id/mainScreenFragment" />
-        <action
-            android:id="@+id/action_profileFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"

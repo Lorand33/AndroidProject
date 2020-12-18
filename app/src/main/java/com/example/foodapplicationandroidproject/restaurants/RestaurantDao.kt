@@ -1,11 +1,11 @@
-package com.example.foodapplicationandroidproject.database
+package com.example.foodapplicationandroidproject.restaurants
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.foodapplicationandroidproject.database.model.Restaurant
+import com.example.foodapplicationandroidproject.restaurants.model.Restaurant
 
 @Dao
 interface RestaurantDao {
