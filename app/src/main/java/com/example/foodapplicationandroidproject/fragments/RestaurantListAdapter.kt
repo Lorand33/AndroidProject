@@ -16,7 +16,7 @@ import com.example.foodapplicationandroidproject.restaurants.model.Restaurant
 import com.example.foodapplicationandroidproject.fragments.MainScreenFragment.Companion.favList
 
 
-class RestaurantListAdapter(private val List: List<Restaurant>,private val context: Context):RecyclerView.Adapter<RestaurantListAdapter.MyViewHolder>() {
+class RestaurantListAdapter(private val restaurantList: List<Restaurant>,private val context: Context):RecyclerView.Adapter<RestaurantListAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val imageView: ImageView = itemView.findViewById(R.id.restaurant_image)
@@ -33,8 +33,7 @@ class RestaurantListAdapter(private val List: List<Restaurant>,private val conte
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentItem = List[position]
-        //holder.imageView.setImageResource(R.drawable.logo)
+        val currentItem = restaurantList[position]
         Glide.with(context).load(currentItem.image_url).into(holder.imageView)
         holder.restaurantNameView.text = currentItem.name
         holder.restaurantAddressView.text = currentItem.address
@@ -64,7 +63,7 @@ class RestaurantListAdapter(private val List: List<Restaurant>,private val conte
     }
 
     override fun getItemCount(): Int {
-        return List.size
+        return restaurantList.size
     }
 
 }

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodapplicationandroidproject.R
 import com.example.foodapplicationandroidproject.databinding.FragmentProfileBinding
 import com.example.foodapplicationandroidproject.favourites.FavouriteViewModel
@@ -15,6 +16,7 @@ import com.example.foodapplicationandroidproject.fragments.LoginFragment.Compani
 import com.example.foodapplicationandroidproject.fragments.LoginFragment.Companion.phone
 import com.example.foodapplicationandroidproject.fragments.LoginFragment.Companion.username
 import com.example.foodapplicationandroidproject.fragments.MainScreenFragment.Companion.favList
+import com.example.foodapplicationandroidproject.fragments.MainScreenFragment.Companion.favouriteRestaurantList
 
 
 class ProfileFragment : Fragment() {
@@ -35,10 +37,11 @@ class ProfileFragment : Fragment() {
 
         favouriteViewModel = ViewModelProvider(this).get(FavouriteViewModel::class.java)
 
-        for(restaurant in favList){
-            restaurants += "$restaurant \n"
-        }
-        binding.profileRestaurants.text = restaurants
+        val listAdapter = FavouriteListAdapter(favouriteRestaurantList,this.requireContext())
+        val recyclerView = binding.favouriteRecyclerView
+        recyclerView.adapter = listAdapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.setHasFixedSize(true)
 
         return binding.root
     }

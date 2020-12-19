@@ -32,7 +32,11 @@
         android:id="@+id/detailFragment"
         android:name="com.example.foodapplicationandroidproject.fragments.DetailFragment"
         android:label="Details"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <action
+            android:id="@+id/action_detailFragment_to_mainScreenFragment"
+            app:destination="@id/mainScreenFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.foodapplicationandroidproject.fragments.ProfileFragment"

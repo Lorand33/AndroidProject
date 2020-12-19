@@ -151,17 +151,16 @@
             android:text="@string/profileRestaurants"
             android:textColor="@color/black"
             android:textSize="20sp" />
-        <TextView
-            android:id="@+id/profileRestaurants"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/favouriteRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="15dp"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:layout_height="match_parent"
+            android:layout_marginBottom="65dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginEnd="4dp"
+            tools:listitem="@layout/favorite_layout" />
     </LinearLayout>
     </ScrollView>
 

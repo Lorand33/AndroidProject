@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.foodapplicationandroidproject.R
 import com.example.foodapplicationandroidproject.databinding.FragmentDetailBinding
 import com.example.foodapplicationandroidproject.favourites.FavouriteViewModel
@@ -69,18 +70,20 @@ class DetailFragment : Fragment() {
             if(binding.detailFavouriteButton.drawable.constantState == requireContext().resources.getDrawable(android.R.drawable.btn_star_big_on).constantState){
                 binding.detailFavouriteButton.setImageResource(android.R.drawable.btn_star_big_off)
                 if(favList.contains(binding.detailRestaurantName.text.toString())){
-                    favList.remove(binding.detailRestaurantName.text.toString())
                     favoriteViewModel.deleteFavorite(binding.detailRestaurantName.text.toString(),username)
                     Toast.makeText(context, "Restaurant removed from favorites", Toast.LENGTH_SHORT).show()
+                    favList.remove(binding.detailRestaurantName.text.toString())
                 }
+                //findNavController().navigate(R.id.action_detailFragment_to_mainScreenFragment)
             }
             else if (binding.detailFavouriteButton.drawable.constantState == requireContext().resources.getDrawable(android.R.drawable.btn_star_big_off).constantState){
                 binding.detailFavouriteButton.setImageResource(android.R.drawable.btn_star_big_on)
                 if(!favList.contains(binding.detailRestaurantName.text.toString())){
-                    favList.add(binding.detailRestaurantName.text.toString())
                     favoriteViewModel.addToFavorites(Favourites(index, binding.detailRestaurantName.text.toString(),username))
                     Toast.makeText(context, "Restaurant added to favorites", Toast.LENGTH_SHORT).show()
+                    favList.add(binding.detailRestaurantName.text.toString())
                 }
+                //findNavController().navigate(R.id.action_detailFragment_to_mainScreenFragment)
             }
         }
 
