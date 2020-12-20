@@ -17,6 +17,7 @@ import com.example.foodapplicationandroidproject.fragments.LoginFragment.Compani
 import com.example.foodapplicationandroidproject.fragments.LoginFragment.Companion.username
 import com.example.foodapplicationandroidproject.fragments.MainScreenFragment.Companion.favList
 import com.example.foodapplicationandroidproject.fragments.MainScreenFragment.Companion.favouriteRestaurantList
+import com.example.foodapplicationandroidproject.fragments.MainScreenFragment.Companion.userFavouriteRestaurantList
 
 
 class ProfileFragment : Fragment() {
@@ -37,7 +38,7 @@ class ProfileFragment : Fragment() {
 
         favouriteViewModel = ViewModelProvider(this).get(FavouriteViewModel::class.java)
 
-        val listAdapter = FavouriteListAdapter(favouriteRestaurantList,this.requireContext())
+        val listAdapter = FavouriteListAdapter(userFavouriteRestaurantList,this.requireContext())
         val recyclerView = binding.favouriteRecyclerView
         recyclerView.adapter = listAdapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

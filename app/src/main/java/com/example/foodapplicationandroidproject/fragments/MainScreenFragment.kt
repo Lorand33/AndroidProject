@@ -18,6 +18,7 @@ import com.example.foodapplicationandroidproject.restaurants.viewModels.Restaura
 import com.example.foodapplicationandroidproject.databinding.FragmentMainScreenBinding
 import com.example.foodapplicationandroidproject.favourites.FavouriteViewModel
 import com.example.foodapplicationandroidproject.favourites.Favourites
+import com.example.foodapplicationandroidproject.fragments.LoginFragment.Companion.username
 
 
 class MainScreenFragment() : Fragment() {
@@ -32,6 +33,7 @@ class MainScreenFragment() : Fragment() {
     companion object{
         var favList : MutableList<String> = mutableListOf()
         lateinit var favouriteRestaurantList: List<Favourites>
+        lateinit var userFavouriteRestaurantList: List<Favourites>
     }
 
     override fun onCreateView(
@@ -77,7 +79,8 @@ class MainScreenFragment() : Fragment() {
         mViewModel.responseRestaurantsFromCities.observe(viewLifecycleOwner,{ response ->
             if(response.isSuccessful){
                 favouriteRestaurantList = favouriteViewModel.getAllFavorites()
-                for(restaurants in favouriteRestaurantList){
+                userFavouriteRestaurantList = favouriteViewModel.getFavoritesByUser(username)
+                for(restaurants in userFavouriteRestaurantList){
                     favList.add(restaurants.restaurantName)
                 }
                 val listAdapter = RestaurantListAdapter(response.body()!!.restaurants,this.requireContext())

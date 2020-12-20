@@ -21,9 +21,7 @@ class FavouriteViewModel(application: Application): AndroidViewModel(application
         MutableLiveData<Favourites>()
     }
 
-    private val favoritesByUser: MutableLiveData<List<Favourites>> by lazy {
-        MutableLiveData<List<Favourites>>()
-    }
+    private var favoritesByUser: List<Favourites> = mutableListOf()
 
     init {
         val favouritesDao = UserDatabase.getDatabase(application).favoritesDao()
@@ -45,11 +43,11 @@ class FavouriteViewModel(application: Application): AndroidViewModel(application
         return allFavorites
     }
 
-    fun getFavoritesByUser(username: String) {
+    fun getFavoritesByUser(username: String) : List<Favourites> {
         viewModelScope.launch(Dispatchers.IO) {
-            val listOfRestaurants: List<Favourites>? = repository.getFavoritesByUser(username)
-            favoritesByUser.postValue(listOfRestaurants)
+            favoritesByUser = repository.getFavoritesByUser(username)
         }
+        return favoritesByUser
     }
 
     fun deleteFavorite(restaurantName: String, username: String) {

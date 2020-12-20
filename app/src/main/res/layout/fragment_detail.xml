@@ -22,16 +22,6 @@
                 android:textColor="@color/purple_700"
                 android:textSize="38sp" />
 
-          <!--  <ImageView
-                android:id="@+id/detailRestaurantImage"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:layout_marginLeft="125dp"
-                android:layout_marginStart="125dp"
-                android:layout_marginRight="125dp"
-                android:gravity="center_horizontal"
-                android:src="@drawable/app_logo" /> -->
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

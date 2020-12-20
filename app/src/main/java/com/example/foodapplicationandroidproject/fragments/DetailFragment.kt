@@ -19,6 +19,8 @@ import com.example.foodapplicationandroidproject.favourites.Favourites
 import com.example.foodapplicationandroidproject.fragments.LoginFragment.Companion.username
 import com.example.foodapplicationandroidproject.fragments.MainScreenFragment.Companion.favList
 import com.example.foodapplicationandroidproject.fragments.MainScreenFragment.Companion.favouriteRestaurantList
+import com.example.foodapplicationandroidproject.fragments.MainScreenFragment.Companion.userFavouriteRestaurantList
+import kotlinx.android.synthetic.main.fragment_main_screen.*
 
 class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
@@ -53,7 +55,7 @@ class DetailFragment : Fragment() {
             startActivity(intent)
         }
 
-        for(restaurants in favouriteRestaurantList){
+        for(restaurants in userFavouriteRestaurantList){
             if(restaurants.restaurantName == binding.detailRestaurantName.text.toString()){
                 index = restaurants.id
             }
@@ -74,7 +76,10 @@ class DetailFragment : Fragment() {
                     Toast.makeText(context, "Restaurant removed from favorites", Toast.LENGTH_SHORT).show()
                     favList.remove(binding.detailRestaurantName.text.toString())
                 }
-                //findNavController().navigate(R.id.action_detailFragment_to_mainScreenFragment)
+                val fragmentManager = fragmentManager
+                val transaction = fragmentManager!!.beginTransaction()
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
             else if (binding.detailFavouriteButton.drawable.constantState == requireContext().resources.getDrawable(android.R.drawable.btn_star_big_off).constantState){
                 binding.detailFavouriteButton.setImageResource(android.R.drawable.btn_star_big_on)
@@ -83,7 +88,10 @@ class DetailFragment : Fragment() {
                     Toast.makeText(context, "Restaurant added to favorites", Toast.LENGTH_SHORT).show()
                     favList.add(binding.detailRestaurantName.text.toString())
                 }
-                //findNavController().navigate(R.id.action_detailFragment_to_mainScreenFragment)
+                val fragmentManager = fragmentManager
+                val transaction = fragmentManager!!.beginTransaction()
+                transaction.addToBackStack(null)
+                transaction.commit()
             }
         }
 
