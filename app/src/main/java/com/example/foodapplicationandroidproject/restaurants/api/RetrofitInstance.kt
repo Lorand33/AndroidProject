@@ -4,6 +4,9 @@ import com.example.foodapplicationandroidproject.restaurants.util.Constants.Comp
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * generating an implementation of the ApiInterface interface
+ */
 object RetrofitInstance {
     private val retrofit by lazy{
         Retrofit.Builder()

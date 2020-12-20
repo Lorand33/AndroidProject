@@ -10,13 +10,16 @@ import com.example.foodapplicationandroidproject.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
+    //variable for Databinding
     private lateinit var binding : ActivityMainBinding
     var bottomNavigationView: BottomNavigationView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //initializing databinding's variable
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
 
+        //defining navigation view
         bottomNavigationView = binding.bottomNavMenu
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment?
@@ -24,6 +27,7 @@ class MainActivity : AppCompatActivity() {
             bottomNavigationView!!,
             navHostFragment!!.navController
         )
+        //bottom nav menu is not shown
         bottomNavigationView!!.visibility = View.GONE
 
     }

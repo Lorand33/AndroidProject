@@ -15,32 +15,40 @@ import com.example.foodapplicationandroidproject.fragments.LoginFragment.Compani
 import com.example.foodapplicationandroidproject.fragments.LoginFragment.Companion.name
 import com.example.foodapplicationandroidproject.fragments.LoginFragment.Companion.phone
 import com.example.foodapplicationandroidproject.fragments.LoginFragment.Companion.username
-import com.example.foodapplicationandroidproject.fragments.MainScreenFragment.Companion.favList
-import com.example.foodapplicationandroidproject.fragments.MainScreenFragment.Companion.favouriteRestaurantList
 import com.example.foodapplicationandroidproject.fragments.MainScreenFragment.Companion.userFavouriteRestaurantList
 
 
 class ProfileFragment : Fragment() {
+    //variable for using Databinding on this fragment
     private lateinit var binding : FragmentProfileBinding
+    //variable for the FavouriteViewModel
     private lateinit var favouriteViewModel: FavouriteViewModel
-    var restaurants = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        //initializing databinding's variable
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_profile, container, false)
+        /**
+         * giving TextView element's a new value, using LoginFragment's companion object elements
+         */
         binding.profileName.text= name
         binding.profileEmail.text = email
         binding.profilePhone.text = phone
         binding.profileUsername.text = username
 
+        //providing a scope for the viewModel
         favouriteViewModel = ViewModelProvider(this).get(FavouriteViewModel::class.java)
 
-        val listAdapter = FavouriteListAdapter(userFavouriteRestaurantList,this.requireContext())
+        //create the recycler view - which appears at the profile page
+        //the adapter; parameters: user's favourite restaurants
+        val listAdapter = FavouriteListAdapter(userFavouriteRestaurantList)
+        //assign variable an element from the layouts
         val recyclerView = binding.favouriteRecyclerView
+        //recycler view's adapter will the adapter defined previously
         recyclerView.adapter = listAdapter
+        //recycler view's layout will be the context
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.setHasFixedSize(true)
 

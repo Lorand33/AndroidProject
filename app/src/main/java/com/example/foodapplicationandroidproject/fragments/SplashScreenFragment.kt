@@ -11,16 +11,19 @@ import com.example.foodapplicationandroidproject.R
 import com.example.foodapplicationandroidproject.databinding.FragmentSplashScreenBinding
 import java.util.*
 
+/**
+ * application's splash screen - the first page we see when the application starts
+ */
 class SplashScreenFragment : Fragment() {
+    //variable for Databinding
     private lateinit var binding : FragmentSplashScreenBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_splash_screen, container, false)
+        //initializing databinding's variable
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_splash_screen, container, false)
         return binding.root
     }
 
@@ -35,6 +38,7 @@ class SplashScreenFragment : Fragment() {
                 }catch ( ex: InterruptedException){
                     ex.printStackTrace()
                 }
+                //we will be navigated to the login page
                 findNavController().navigate(R.id.action_splashScreenFragment_to_loginFragment)
             }
         },2000)

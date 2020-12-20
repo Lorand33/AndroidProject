@@ -7,6 +7,9 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+/**
+ * turn HTTP Api into a Kotlin interface
+ */
 interface ApiInterface {
     @GET("restaurants")
     suspend fun getRestaurantsByCities(@Query("city") city: String,@Query("page") page: Int): Response<RestaurantsFromCities>
